@@ -1,0 +1,14 @@
+{
+  "graphic":{
+    "type":["radar","bar"],
+    "display":["overlay","sequence","delayed"],
+    "order":["none","random","down","up"]
+  },
+  "data":{
+    "type":["quantitative","qualitative"],
+    "valueInput":["random","formula","custom"]
+  },
+  "answer":{
+    "type":["select","rank","input","sort"]
+  }
+}
