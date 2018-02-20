@@ -1,0 +1,20 @@
+{"questions":[
+    {
+      "aim":"",
+      "graphic":{
+        "type":"",
+        "display":"",
+        "order":""
+      },
+      "data":"",
+      "question":"",
+      "answer":""
+
+    }
+  ],
+  "graphic":{
+    "type":["radar","bar"],
+    "display":["overlay","sequence","delayed"],
+    "order":["none","random","down","up"]
+  }
+}
