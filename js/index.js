@@ -23,6 +23,15 @@ function init(){
 
   }
 }
+
+
+
+
+
+
+function hide(){
+  $( ".card-header" ).toggle();
+}
 function edit(){
   if (editable){
     // enable sortable
