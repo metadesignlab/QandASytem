@@ -9,7 +9,7 @@ function init(){
   for(let i=0;i<data.length;i++){
     card=d3.select(`#q${i}`)
     d=data[i];
-    card.append('div').attr('class',"card-header handle").text(function(d){return d.aim});
+    card.append('div').attr('class',"card-header handle").attr('contenteditable','false').text(function(d){return d.aim});
     card.append('div').attr('class',"card-body").attr('contenteditable','false')
         .append('p').text(function(d){
           let body=`
@@ -25,22 +25,37 @@ function init(){
 }
 function edit(){
   if (editable){
-    editable=false;
+    // enable sortable
+    d3.selectAll('.notHandle').classed("handle", true).classed("notHandle", false);
     $('.sortable').sortable({
         handle: '.handle'
     });
 
+
+    // update button
     $('#edit').text("Edit")
     $('#edit').toggleClass( "btn-danger" )
     d3.selectAll('.card-body').attr('contenteditable','false');
+    d3.selectAll('.card-header').attr('contenteditable','false');
 
+
+    // set new edit state
+    editable=false;
 
   }else{
-    editable=true;
+    // disable sortable
     $('.sortable').sortable('destroy');
+    d3.selectAll('.handle').classed("notHandle", true).classed("handle", false);
+
+    // update button
     $('#edit').text("Done")
     $('#edit').toggleClass( "btn-danger" )
+    // enable text edit
     d3.selectAll('.card-body').attr('contenteditable','true');
+    d3.selectAll('.card-header').attr('contenteditable','true');
+
+    // set new edit state
+    editable=true;
   }
 }
 
