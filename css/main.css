@@ -7,3 +7,10 @@
 .graphDiv{
   display: inline-block;
 }
+.toolbar{
+
+  background: rgba(255, 255, 255, 0.9)
+}
+.container{
+  max-width: 750px;
+}
