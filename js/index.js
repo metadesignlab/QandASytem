@@ -9,15 +9,16 @@ function init(){
   for(let i=0;i<data.length;i++){
     card=d3.select(`#q${i}`)
     d=data[i];
-    card.append('div').attr('class',"card-header handle").attr('contenteditable','false').text(function(d){return d.aim});
-    cardBody=card.append('div').attr('class',"card-body").attr('contenteditable','false');
-    cardBody.append('h4').attr("class","quest").text(function(d){ return d.question});
+    card.append('div').attr('class',"card-header handle editable").attr('contenteditable','false').text(function(d){return d.aim});
+    cardBody=card.append('div').attr('class',"card-body");
+    cardBody.append('h4').attr("class","quest editable").attr('contenteditable','false').text(function(d){ return d.question});
     cardBody.append('div').attr('class','graphDiv col-sm-6').append('canvas').attr('id',`#g${i}_1`);
     cardBody.append('div').attr('class','graphDiv col-sm-6').append('canvas').attr('id',`#g${i}_2`);
     drawChart(`#g${i}_1`,data[i],0)
     drawChart(`#g${i}_2`,data[i],1)
 
   }
+  makeSortable()
 }
 
 
@@ -32,16 +33,13 @@ function edit(){
   if (editable){
     // enable sortable
     d3.selectAll('.notHandle').classed("handle", true).classed("notHandle", false);
-    $('.sortable').sortable({
-        handle: '.handle'
-    });
+    makeSortable()
 
 
     // update button
     $('#edit').text("Edit")
     $('#edit').toggleClass( "btn-danger" )
-    d3.selectAll('.card-body').attr('contenteditable','false');
-    d3.selectAll('.card-header').attr('contenteditable','false');
+    d3.selectAll('.editable').attr('contenteditable','false');
 
 
     // set new edit state
@@ -56,8 +54,8 @@ function edit(){
     $('#edit').text("Done")
     $('#edit').toggleClass( "btn-danger" )
     // enable text edit
-    d3.selectAll('.card-body').attr('contenteditable','true');
-    d3.selectAll('.card-header').attr('contenteditable','true');
+    d3.selectAll('.editable').attr('contenteditable','true');
+
 
     // set new edit state
     editable=true;
@@ -69,7 +67,67 @@ let editable=false;
 $( document ).ready(function() {
     console.log( "ready!" );
     init()
-    $('.sortable').sortable({
-        handle: '.handle'
-    });
 });
+
+
+function makeSortable(){
+
+  let startIndex, changeIndex, uiHeight;
+
+  $('.sortable').sortable({
+      handle: '.handle',
+    'placeholder': 'marker',
+    start: function(e, ui) {
+
+      startIndex = ui.placeholder.index();
+      uiHeight = ui.item.outerHeight(true);//get offset incl margin
+
+      ui.item.nextAll('li:not(.marker)').css({
+        transform: 'translateY(' +uiHeight+ 'px)'
+      });
+
+      ui.placeholder.css({
+        height: 0,
+        padding: 0
+      });
+    },
+    change: function(e, ui) {
+
+      changeIndex = ui.placeholder.index();
+
+
+      if (startIndex > changeIndex) {
+
+        var slice = $('ul li').slice(changeIndex, $('ul li').length);
+
+        slice.not('.ui-sortable-helper').each(function() {
+          var item = $(this);
+          item.css({
+            background:'lightcoral',
+            transform: 'translateY(' +uiHeight+ 'px)'
+          });
+        });
+
+      } else if (startIndex < changeIndex) {
+
+        var slice = $('ul li').slice(startIndex, changeIndex);
+
+        slice.not('.ui-sortable-helper').each(function() {
+          var item = $(this);
+          item.css({
+            background: 'lightgreen',
+            transform: 'translateY(0px)'
+          });
+        });
+      }
+
+      startIndex = changeIndex
+    },
+    stop: function(e, ui) {
+      $('.ui-sortable-handle').css({
+        background: 'lightblue',
+        transform: 'translateY(0)'
+      })
+    }
+  });
+}
