@@ -1,14 +1,14 @@
 function init(){
-  let cards=d3.select('#questions').attr('class','carousel-inner')
+  let cards=d3.select('#questions').attr('class','row sortable carousel-inner')
   	.selectAll('div')
   	.data(data).enter()
-    .append('div').attr('class',"col-sm-12 handle carousel-item-container carousel-item").attr('id',function(d,i){return `q${i}`});
+    .append('div').attr('class',"col-sm-12 carousel-item-container carousel-item").attr('id',function(d,i){return `q${i}`});
 
     d3.select(`#q0`).classed("active",true);
   for(let i=0;i<data.length;i++){
     card=d3.select(`#q${i}`).append('div').attr('class',"card");
     d=data[i];
-    card.append('div').attr('class',"card-header editable").attr('contenteditable','false').text(function(d){return d.aim});
+    card.append('div').attr('class',"card-header handle editable").attr('contenteditable','false').text(function(d){return d.aim});
     cardBody=card.append('div').attr('class',"card-body");
     cardBody.append('h4').attr("class","quest editable").attr('contenteditable','false').text(function(d){ return d.question});
     cardBody.append('div').attr('class','graphDiv col-sm-6').append('canvas').attr('id',`#g${i}_1`);
@@ -32,9 +32,11 @@ function hide(){
 
   if(viewStatus==0){
     d3.selectAll('.carousel-item-container').classed('carousel-item',false)
+    viewStatus=1;
 
   }else{
-    d3.selectAll('.carousel-item-container').classed('carousel-item',false)
+    d3.selectAll('.carousel-item-container').classed('carousel-item',true)
+    viewStatus=0;
 
   }
 
