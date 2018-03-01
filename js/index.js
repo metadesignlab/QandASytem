@@ -10,18 +10,12 @@ function init(){
     card=d3.select(`#q${i}`)
     d=data[i];
     card.append('div').attr('class',"card-header handle").attr('contenteditable','false').text(function(d){return d.aim});
-    cardBody=card.append('div').attr('class',"card-body").attr('contenteditable','false')
-        .append('p').text(function(d){
-          let body=`
-           Question:${d.question}
-           Graph:${d.graphic.type}
-           Data:${d.data.values}
-          `
-          return body
-
-        });
-    cardBody.append('div').attr('class','graphDiv').append('canvas').attr('id',`#g${i}`);
-    drawChart(`#g${i}`,data[i])
+    cardBody=card.append('div').attr('class',"card-body").attr('contenteditable','false');
+    cardBody.append('h4').attr("class","quest").text(function(d){ return d.question});
+    cardBody.append('div').attr('class','graphDiv col-sm-6').append('canvas').attr('id',`#g${i}_1`);
+    cardBody.append('div').attr('class','graphDiv col-sm-6').append('canvas').attr('id',`#g${i}_2`);
+    drawChart(`#g${i}_1`,data[i],0)
+    drawChart(`#g${i}_2`,data[i],1)
 
   }
 }

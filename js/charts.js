@@ -1,15 +1,29 @@
 
 
-function drawChart(canvasId,data){
-  console.log(data.data.values);
+function drawChart(canvasId,data,count){
+  // console.log(data.data.values);
   let ctx = document.getElementById(canvasId).getContext('2d');
+  let options={
+      scales: {
+          yAxes: [{
+              ticks: {
+                  beginAtZero:true
+              }
+          }]
+      }
+  }
+
+  if (data.graphic.type == 'pie' || data.graphic.type == 'doughnut'){
+    options=""
+
+  };
   let myChart = new Chart(ctx, {
-      type: 'bar',
+      type: data.graphic.type,
       data: {
-          labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+          labels: data.data.labels,
           datasets: [{
               label: '# of Votes',
-              data: [12, 19, 3, 5, 2, 3],
+              data: data.data.values[count],
               backgroundColor: [
                   'rgba(255, 99, 132, 0.2)',
                   'rgba(54, 162, 235, 0.2)',
@@ -26,18 +40,11 @@ function drawChart(canvasId,data){
                   'rgba(153, 102, 255, 1)',
                   'rgba(255, 159, 64, 1)'
               ],
-              borderWidth: 1
+              borderWidth: 1,
+
           }]
       },
-      options: {
-          scales: {
-              yAxes: [{
-                  ticks: {
-                      beginAtZero:true
-                  }
-              }]
-          }
-      }
+      options:options
   });
 
 

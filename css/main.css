@@ -4,3 +4,6 @@
 .handle {
   cursor: move;
 }
+.graphDiv{
+  display: inline-block;
+}
