@@ -10,7 +10,7 @@ function init(){
     card=d3.select(`#q${i}`)
     d=data[i];
     card.append('div').attr('class',"card-header handle").attr('contenteditable','false').text(function(d){return d.aim});
-    card.append('div').attr('class',"card-body").attr('contenteditable','false')
+    cardBody=card.append('div').attr('class',"card-body").attr('contenteditable','false')
         .append('p').text(function(d){
           let body=`
            Question:${d.question}
@@ -20,6 +20,8 @@ function init(){
           return body
 
         });
+    cardBody.append('div').attr('class','graphDiv').append('canvas').attr('id',`#g${i}`);
+    drawChart(`#g${i}`,data[i])
 
   }
 }
