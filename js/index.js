@@ -1,6 +1,5 @@
 function init(){
-  let cards=d3.select('#main')
-    .append('div').attr('class',"row sortable")
+  let cards=d3.select('#questions')
   	.selectAll('div')
   	.data(data).enter()
     .append('div').attr('class',"col-sm-12")
