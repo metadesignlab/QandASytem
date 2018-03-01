@@ -3,6 +3,7 @@ function init(){
     .append('div').attr('class',"row sortable")
   	.selectAll('div')
   	.data(data).enter()
+    .append('div').attr('class',"col-sm-12")
 
   	.append('div').attr('class',"card").attr('id',function(d,i){return `q${i}`});
 
