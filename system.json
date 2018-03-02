@@ -9,6 +9,6 @@
     "valueInput":["random","formula","custom"]
   },
   "answer":{
-    "type":["select","rank","input","sort"]
+    "type":["select","rank","input","sort","vote"]
   }
 }
